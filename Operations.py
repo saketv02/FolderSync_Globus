@@ -1,4 +1,6 @@
-from globus_sdk import *
+from globus_sdk import AuthClient, TransferClient, TransferData
+from globus_sdk import ConfidentialAppAuthClient
+from globus_sdk import RefreshTokenAuthorizer
 from watchdog.events import *
 
 
@@ -30,6 +32,7 @@ class Operations:
     def transfer_file(self, src_path):
         ''' Transfers file from the local machine to the remote machine'''
         dest_path = self._get_remote_path(src_path)
+        isDir = os.path.isdir(src_path)
         logger.info('Copying\n\t%s\nto\n\t%s' % (src_path.replace('\\', '/'), dest_path.replace('\\', '/')))
         try:
             dest_path = dest_path.replace('\\', '/')
@@ -46,7 +49,7 @@ class Operations:
                                      sync_level="exists")
                 #tdata.add_item(head_s, head_d,recursive=True)
                 print("Creting dir src:%s dir:%s" % (head_s, head_d))
-                tdata.add_item(src_path, dest_path)
+                tdata.add_item(src_path, dest_path, recursive=isDir)
                 print("Creting dir src:%s dir:%s" % (src_path, dest_path))
                 transfer_result = self._connection.submit_transfer(tdata)
                 print("task_id =", transfer_result["task_id"])

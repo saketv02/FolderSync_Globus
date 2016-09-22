@@ -68,6 +68,11 @@ def _main():
 
     # Create necessary objects for this particular mapping and schedule this mapping on the Watchdog observer as appropriate
     operations = Operations(gridftp_connection = gridftp_connection, local_base = local_base, remote_base = remote_base)
+    #Create an initial sync
+    print "Syncing folders"
+
+    operations.transfer_file(local_base)
+
     event_handler = FolderWatchdog(ignore_patterns = cfg.ignore_patterns, operations = operations)
     observer.schedule(event_handler, path=local_base, recursive=True)
 

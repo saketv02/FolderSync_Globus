@@ -1,4 +1,6 @@
-from globus_sdk import TransferClient
+from globus_sdk import AuthClient, TransferClient
+from globus_sdk import ConfidentialAppAuthClient
+from globus_sdk import RefreshTokenAuthorizer
 
 class GridFTPConnection:
 
