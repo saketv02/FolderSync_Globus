@@ -26,7 +26,7 @@ class Operations:
 
     def _get_remote_path(self, local_path):
         '''This creates the remote path from the local path'''
-        remote_relative = local_path[self._local_base_length+1:]
+        remote_relative = local_path[self._local_base_length:]
         return self._remote_base + remote_relative
 
     def transfer_file(self, src_path):
